@@ -1,99 +1,184 @@
-![](assets/tut_template-bc54058d.png)
+
+# Tutorial Aims
 
 
-### Tutorial Aims
+#### <a href="#section1"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
 
-#### <a href="#section1"> 1. Tidying and formatting data </a>
+#### <a href="#section2"> 2. Creating maps visualizing current and future distributions
 
-#### <a href="#section1"> 2. Learning the basics of Species Distribution Modelling (SDM) </a>
 
-#### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data </a>
-
-#### <a href="#section3"> 4. Creating interactive bubble maps! </a>
-
-### Whale-come to Spatial Data and Maps part II!
+## Whale-come to Spatial Data and Maps part II!
+### What is Species Distribution Modelling?
 
 ---------------------------
-Today's tutorial will be building off on this [tutorial](https://ourcodingclub.github.io/tutorials/maps/#map_data) which introduced us to working with spatial data and creating informative maps. Knowing the distributions of species is important for environmental management. However, it is difficult to know where individuals of every species are at any one time, except perhaps for some well-researched, and highly endangered megafauna or rare plants. Thus, Species Distribution models (SDMs) are used to predict a species' geographic and environmental range, typically incorporating both seasonal and temporal variability.Species distribution models (SDMs) are a popular tool in quantitative ecology (Franklin 2010; Peterson et al. 2011; Guisan, Thuiller, and Zimmermann 2017) and constitute the most widely used modelling framework in global change impact assessments for projecting potential future range shifts of species (IPBES 2016). There are several reasons that make them so popular: they are comparably easy to use because many software packages (e.g. Thuiller et al. 2009; Phillips, Anderson, and Schapire 2006) and guidelines (e.g. Elith, Leathwick, and Hastie 2008; Elith et al. 2011; Merow, Smith, and Silander Jr 2013; Guisan, Thuiller, and Zimmermann 2017) are available, and they have comparably low data requirements.
+Hello everyone! Today we will be building off this [tutorial](https://ourcodingclub.github.io/tutorials/maps/#map_data) which has introduced us to spatial data and creating informative maps. It is recommended to have done part I of this tutorial before starting on this one, and if you need a refresher feel free to take a look before we start! Cool, so now that we've dipped our toes into plotting species occurrence points onto maps, perhaps we can set our sights on a broader horizon- modelling species distributions for conservation and management purposes.
 
-As input, SDMs require georeferenced biodiversity observations (e.g. individual locations, species’ presence, species’ counts, species richness; the response or dependent variable) and geographic layers of environmental information (e.g. climate, land cover, soil attributes; the predictor or independent variables). Such information are now widely available in digital format. For example, online repositories provide data on species distributions (e.g. GBIF and OBIS), on individual animal locations (e.g. Movebank), on climate (e.g. WorldClim and CHELSA) as well as land cover and other remote sensing products (e.g. Copernicus). We can then relate the biodiversity observations at specific sites to the prevailing environmental conditions at those sites. Different statistical and machine-learning algorithms are available for this. Once we have estimated this biodiversity-environment relationship, we can make predictions in space and in time by projecting the model onto available environmental layers (Figure 1.1).
+ Here's where Species Distribution Models (SDMs) come in! They've gained popularity due to their ease of use and low data requirements. Beyond visualizing species distributions, SDMs can help us explore the patterns and processes behind the observed distribution of species. Thus, SDMs can be used to predict and project shifts in a species' potential future geographic range, encompassing both seasonal and temporal variability- no crystal gazing required! Let's quickly break it down. Species Distribution Modelling typically encompasses 5 main steps (1) conceptualization, (2) data preparation, (3) model fitting, (4) model assessment, and (5) prediction (Figure 1).
+
+
+
+ Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift?  For our tutorial, we will be incorporating the species occurrence data for whale sharks with environmental data to create interactive maps visualizing their current and future distributions. Since multiple studies have related whale shark presences with chlorophyll concentrations (as a proxy for prey abundance) as well as sea surface temperature (SST) between the range of ..., we shall pick these drivers as our environmental predictors. All the data required for this tutorial can be accessed [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data) from <a href="https://github.com/EdDataScienceEES/tutorial-nicolelikesharks" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it into your desired folder.
+
+ # Index
+
+ Whew! That was a lot. Not to worry, here is a quick breakdown of what we will be covering today.
+
+ #### <a href="#section1"> 1. Downloading data </a>
+
+ #### <a href="#section1"> 2. Data Preparation: Tidying and formatting data using `tidyr`</a>
+
+
+ #### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data </a>
+
+ #### <a href="#section3"> 4. Creating interactive bubble maps using `leaflet`!  </a>
+
+ We won't be completing the full 5-step process of modelling as we just want to ease into the process by quickly visualizing the potential relationships between whale shark presences with chlorophyll and SST. That being said, there is so much to species distribution modelling, we can explore the statistics behind those relationships, plot even more informative species range predictions and more! If you're intrigued (and of course you are) take a look at some [useful resources](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Useful%20resources) that go in depth, and keep an eye out for our future tutorials that will take a deeper dive into the species distribution modelling.
+
+![species distribution process]()
+
+
 
 We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
 
-To create subheadings, you can use `#`, e.g. `# Subheading 1` creates a subheading with a large font size. The more hashtags you add, the smaller the text becomes. If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
-
-# What is Species Distribution Modelling (SDM)?
-##
-###
-
-This is some introductory text for your tutorial. Explain the skills that will be learned and why they are important. Set the tutorial in context.
-
-You can get all of the resources for this tutorial from <a href="https://github.com/ourcodingclub/CC-EAB-tut-ideas" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it.
-
-<a name="section1"></a>
-
-## 1. The first section
+If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
 
 
-At the beginning of your tutorial you can ask people to open `RStudio`, create a new script by clicking on `File/ New File/ R Script` set the working directory and load some packages, for example `ggplot2` and `dplyr`. You can surround package names, functions, actions ("File/ New...") and small chunks of code with backticks, which defines them as inline code blocks and makes them stand out among the text, e.g. `ggplot2`.
 
-When you have a larger chunk of code, you can paste the whole code in the `Markdown` document and add three backticks on the line before the code chunks starts and on the line after the code chunks ends. After the three backticks that go before your code chunk starts, you can specify in which language the code is written, in our case `R`.
 
-To find the backticks on your keyboard, look towards the top left corner on a Windows computer, perhaps just above `Tab` and before the number one key. On a Mac, look around the left `Shift` key. You can also just copy the backticks from below.
+
+## 1. Downloading data
+
+
+First, open `RStudio`, create a new script by clicking on `File/ New File/ R Script`. If you are unfamiliar with `RStudio` and don't know where to start, this introductory [tutorial](https://ourcodingclub.github.io/tutorials/intro-to-r/index.html) might help! Next set the working directory like so:
 
 ```r
-# Set the working directory
-setwd("your_filepath")
+ # Set the working directory (this is just an example, replace with your own file path)
+setwd("C:/Users/nicol/Documents/Data Science Course/tutorial-nicolelikesharks)
+```
+(Tip for Windows users: If you copy and paste a filepath from Windows Explorer into RStudio, it will appear with backslashes (\ ), but since R requires all filepaths to be written using forward-slashes (/) remember to change those). Next, load the following packages below using `library()`. If you don't have them installed, type `install.packages"package_name"` to install them before loading them.
 
-# Load packages
-library(ggplot2)
+```
+# Libraries----
+
+library(tidyr)
 library(dplyr)
+library(leaflet) # For creating our interactive maps
+library(htmlwidgets)
+library(sdmpredictors) # Package for all our SDM needs
+library(sp)
+library(sf)
+library(rgdal)
+library(raster)
+library(ggplot2) # For creating maps
+library(ggthemes) # For choosing our map theme
+library(viridis) # Colour palette that colour-blind friendly
+library(rasterVis)
+library(maps)
+library(rworldmap)
+library(maptools)
+
 ```
 
-<a name="section2"></a>
 
-## 2. The second section
+## 2. Data Preparation: Tidying and formatting data
 
 You can add more text and code, e.g.
 
 ```r
-# Create fake data
-x_dat <- rnorm(n = 100, mean = 5, sd = 2)  # x data
-y_dat <- rnorm(n = 100, mean = 10, sd = 0.2)  # y data
-xy <- data.frame(x_dat, y_dat)  # combine into data frame
+# Loading and preparing data----
+
+whale_sharks <- read.csv("Data/whale_sharks_ningaloo.csv")
+
+# Inspect whale shark occurence data
+
+head(whale_sharks)
+
+# Checking to see how many rows and columns there are
+
+dim(whale_sharks)
+
+# Viewing column names
+
+colnames(whale_sharks)
+
+
+# Only keeping columns we need
+
+whale_sharks_latlong <- subset(whale_sharks, select=c(oid,latitude,longitude,num_animals))
+whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
+
 ```
 
 Here you can add some more text if you wish.
 
-```r
-xy_fil <- xy %>%  # Create object with the contents of `xy`
-	filter(x_dat < 7.5)  # Keep rows where `x_dat` is less than 7.5
+```
+# Loading sea surface temperature range and chlorophyll minimum rasters
+
+temp_raster <- raster("Data/surface_temp.tif")
+chl_raster <- raster("Data/chl_min.tif")
 ```
 
 And finally, plot the data:
 
 ```r
-ggplot(data = xy_fil, aes(x = x_dat, y = y_dat)) +  # Select the data to use
-	geom_point() +  # Draw scatter points
-	geom_smooth(method = "loess")  # Draw a loess curve
+# Preliminary visualization----
+
+# Plot basic whale shark occurence points
+
+(prelim_plot <- ggplot(whale_sharks_latlong, aes(x = longitude, y = latitude,
+                                                 colour = num_animals)) +
+    geom_point())
+
 ```
 
-At this point it would be a good idea to include an image of what the plot is meant to look like so students can check they've done it right. Replace `IMAGE_NAME.png` with your own image file:
+```r
 
-<center> <img src="{{ site.baseurl }}/IMAGE_NAME.png" alt="Img" style="width: 800px;"/> </center>
+# Obtaining map data
+
+world <- getMap(resolution = "low")
+world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
+
+
+# Plotting points on australia map
+
+(whale_sharks_map <- ggplot() +
+    borders("world", xlim = c(113, 154), ylim = c(-44, -10),
+            colour = "gray40", fill = "gray75", size = 0.3) +
+    geom_polygon(data = world_aus,
+                 aes(x = long, y = lat, group = group),
+                 fill = NA, colour = "blue") +
+    geom_point(data = whale_sharks_latlong,  # Add and plot species data
+               aes(x = longitude, y = latitude,
+                   colour = num_animals)) +
+    scale_colour_viridis(option = "inferno") +
+    coord_quickmap() +  # Prevents stretching when resizing
+    theme_map() +  # Remove ugly grey background
+    xlab("Longitude") +
+    ylab("Latitude") +
+    guides(colour=guide_legend(title="Number of whale sharks observed")))
+
+		# Save our plot
+		ggsave("Output/whale_sharks_map")```
+
+
+
+This is what our preliminary plot looks like!
+
+<center> <img src="{{ site.baseurl }}/" alt="Img" style="width: 800px;"/> </center>
 
 <a name="section1"></a>
 
-## 3. The third section
+## 3. Plotting occurrence data points onto predictor maps
 
 More text, code and images.
 
-This is the end of the tutorial. Summarise what the student has learned, possibly even with a list of learning outcomes. In this tutorial we learned:
+Aaaannd that's a wrap! Congratulations, you can now show off your beautiful maps to your friends and family! In this tutorial we learned:
 
-##### - how to generate fake bivariate data
-##### - how to create a scatterplot in ggplot2
-##### - some of the different plot methods in ggplot2
+##### - What Species Distribution Modelling is, why and how we use it.
+##### - How to create basic maps
+##### - How to create interactive maps.
 
+If you're a real keen bean, try downloading your own species occurrence and climate datasets and create your own maps! Hope to _sea_ you on our next tutorial where we complete the entire process.
 We can also provide some useful links, include a contact form and a way to send feedback.
 
 For more on `ggplot2`, read the official <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">ggplot2 cheatsheet</a>.
@@ -105,9 +190,9 @@ Everything below this is footer material - text and links that appears at the en
 
 #### Check out our <a href="https://ourcodingclub.github.io/links/" target="_blank">Useful links</a> page where you can find loads of guides and cheatsheets.
 
-#### If you have any questions about completing this tutorial, please contact us on ourcodingclub@gmail.com
+#### If you have any questions about completing this tutorial, please contact me at s1761850@ed.ac.uk
 
-#### <a href="INSERT_SURVEY_LINK" target="_blank">We would love to hear your feedback on the tutorial, whether you did it in the classroom or online!</a>
+#### <a href="INSERT_SURVEY_LINK" target="_blank"> I would love to hear your feedback on the tutorial, whether you did it in the classroom or online!</a>
 
 <ul class="social-icons">
 	<li>
