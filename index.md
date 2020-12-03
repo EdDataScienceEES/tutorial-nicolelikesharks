@@ -15,7 +15,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
  Here's where Species Distribution Models (SDMs) come in! They've gained popularity due to their ease of use and low data requirements. Beyond visualizing species distributions, SDMs can help us explore the patterns and processes behind the observed distribution of species. Thus, SDMs can be used to predict and project shifts in a species' potential future geographic range, encompassing both seasonal and temporal variability- no crystal gazing required! Let's quickly break it down. Species Distribution Modelling typically encompasses 5 main steps (1) conceptualization, (2) data preparation, (3) model fitting, (4) model assessment, and (5) prediction (Figure 1).
 
-<img align="left" width="1145" height="640" src="./Images/SDM_steps.png">
+<img align="center" width="687" height="384" src="./Images/SDM_steps.png">
 
 Figure 1: 5-step process to Species Distribution Modelling. Source: [Zurell, 2020](https://damariszurell.github.io/SDM-Intro/#25_Predictions)
 
