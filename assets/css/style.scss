@@ -5,7 +5,15 @@
 .page-header{
 color: #ffff;
 background-color: #707e99;
-background-image: url(../img/whaleshark_header.png);
+background-image: url(../img/whaleshark_header_fixed.png);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-position: cover;
+background-size: cover;
 background-repeat: no-repeat;
-background-size: auto;
+background-attachment: fixed;
+width: 100%;
+height: 250px;
 }
