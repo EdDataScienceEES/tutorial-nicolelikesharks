@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ESRI_ItemInformation Culture='en-US'>
+<name>3b6b12e7bcca419990c9081c0af254a2</name>
+<guid>49CD01E8-11F7-432C-B173-C9BDBFC034B7</guid>
+<catalogpath></catalogpath>
+<snippet></snippet>
+<description>A biogeographic classification of the world&apos;s coastal and continental shelf waters following a nested hierarchy of realms, provinces and ecoregions.
+
+This dataset was uploaded to Data Basin and is available with additional information at: http://app.databasin.org/app/pages/datasetPage.jsp?id=3b6b12e7bcca419990c9081c0af254a2</description>
+<summary></summary>
+<title>Marine Ecoregions of the World</title>
+<tags></tags>
+<type>Layer Package</type>
+<typekeywords>
+<typekeyword>Shapefile Feature Class</typekeyword>
+<typekeyword>Layer Package</typekeyword>
+<typekeyword>Data</typekeyword>
+<typekeyword>ArcMap</typekeyword>
+<typekeyword>.lpk</typekeyword>
+</typekeywords>
+<thumbnail>thumbnail/thumbnail.png</thumbnail>
+<documentation></documentation>
+<url></url>
+<datalastmodifiedtime></datalastmodifiedtime>
+<extent>
+<xmin>-180.000000000079</xmin>
+<ymin>-85.4702911443208</ymin>
+<xmax>179.999999999874</xmax>
+<ymax>86.919396288676</ymax>
+</extent>
+<spatialreference>GCS_WGS_1984</spatialreference>
+<accessinformation></accessinformation>
+</ESRI_ItemInformation>

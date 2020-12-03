@@ -1,0 +1,35 @@
+# Dataset Title
+Marine Ecoregions of the World
+
+
+# URL
+https://databasin.org/datasets/3b6b12e7bcca419990c9081c0af254a2
+
+
+# Dataset Type
+ArcGIS
+
+
+# Credits
+Spalding et al. 2007, modified by The Nature Conservancy
+
+
+# Uploaded By
+[TNC GIS Staff](https://databasin.org/people/GIS@TNC)
+
+
+# Description
+A biogeographic classification of the world&#39;s coastal and continental shelf waters following a nested hierarchy of realms, provinces and ecoregions.
+
+
+# Use Constraints
+This work is licensed under a  Creative Commons Attribution-NonCommercial 3.0 License.
+
+
+### Original Metadata
+metadata/metadata1_original.xml
+
+
+### Data Basin Metadata
+metadata/metadata1.xml
+
