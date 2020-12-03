@@ -1,5 +1,5 @@
 
-# Tutorial Aims
+# Tutorial Aims:
 
 
 #### <a href="#section1"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
@@ -9,35 +9,32 @@
 
 ## Whale-come to Spatial Data and Maps part II!
 ### What is Species Distribution Modelling?
+[happy whale shark]() Source:
 
 ---------------------------
 Hello everyone! Today we will be building off this [tutorial](https://ourcodingclub.github.io/tutorials/maps/#map_data) which has introduced us to spatial data and creating informative maps. It is recommended to have done part I of this tutorial before starting on this one, and if you need a refresher feel free to take a look before we start! Cool, so now that we've dipped our toes into plotting species occurrence points onto maps, perhaps we can set our sights on a broader horizon- modelling species distributions for conservation and management purposes.
 
  Here's where Species Distribution Models (SDMs) come in! They've gained popularity due to their ease of use and low data requirements. Beyond visualizing species distributions, SDMs can help us explore the patterns and processes behind the observed distribution of species. Thus, SDMs can be used to predict and project shifts in a species' potential future geographic range, encompassing both seasonal and temporal variability- no crystal gazing required! Let's quickly break it down. Species Distribution Modelling typically encompasses 5 main steps (1) conceptualization, (2) data preparation, (3) model fitting, (4) model assessment, and (5) prediction (Figure 1).
 
-<img align="center" width="687" height="384" src="./Images/SDM_steps.png">
-
-Figure 1: 5-step process to Species Distribution Modelling. Source: [Zurell, 2020](https://damariszurell.github.io/SDM-Intro/#25_Predictions)
 
 
- Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift?  For our tutorial, we will be incorporating the species occurrence data for whale sharks with environmental data to create interactive maps visualizing their current and future distributions. Since multiple studies have related whale shark presences with chlorophyll concentrations (as a proxy for prey abundance) as well as sea surface temperature (SST) between the range of ..., we shall pick these drivers as our environmental predictors. All the data required for this tutorial can be accessed [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data) from <a href="https://github.com/EdDataScienceEES/tutorial-nicolelikesharks" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it into your desired folder.
+ Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift? Building an SDM requires mindful consideration of specific predictors driving the variability in species occurrence. Since multiple studies have related whale shark presences with chlorophyll concentrations (as a proxy for prey abundance) as well as sea surface temperature (SST) between the range of ..., we shall pick these drivers as our environmental predictors. For our tutorial, we will be thus be incorporating whale shark occurrence data with chlorophyll and SST data to create interactive maps visualizing their current and future distributions.  All the data required for this tutorial can be accessed [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data) from <a href="https://github.com/EdDataScienceEES/tutorial-nicolelikesharks" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it into your desired folder.
 
- # Index
+ # Index:
 
- Whew! That's a lot to mull over!Not to worry, here is a quick breakdown of what we will be covering today.
+ Whew! That was a lot. Not to worry, here is a quick breakdown of what we will be covering today.
 
  #### <a href="#section1"> 1. Downloading data </a>
 
- #### <a href="#section1"> 2. Data Preparation: Tidying and formatting data using `tidyr`</a>
+ #### <a href="#section1"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
 
 
- #### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data </a>
+ #### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
 
  #### <a href="#section3"> 4. Creating interactive bubble maps using `leaflet`!  </a>
 
  We won't be completing the full 5-step process of modelling as we just want to ease into the process by quickly visualizing the potential relationships between whale shark presences with chlorophyll and SST. That being said, there is so much to species distribution modelling, we can explore the statistics behind those relationships, plot even more informative species range predictions and more! If you're intrigued (and of course you are) take a look at some [useful resources](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Useful%20resources) that go in depth, and keep an eye out for our future tutorials that will take a deeper dive into the species distribution modelling.
 
-![species distribution process]()
 
 
 
