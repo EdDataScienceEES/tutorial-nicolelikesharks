@@ -45,7 +45,20 @@ colnames(whale_sharks)
 whale_sharks_latlong <- subset(whale_sharks, select=c(oid,latitude,longitude,num_animals)) 
 whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
 
+#eliminate false records (on land)
+data(wrld_simpl)
+plot(wrld_simpl, xlim = c(113, 154), ylim = c(-44, -10), axes=TRUE, col="light yellow")
 
+coordinates(whale_sharks_latlong) <- ~longitude+latitude
+crs(whale_sharks_latlong) <- crs(wrld_simpl)
+class(whale_sharks_latlong)
+class(wrld_simpl)
+
+ovr <- over(whale_sharks_latlong, wrld_simpl)
+cntr <-ovr$NAME
+
+i <-which(!is.na(cntr))
+i
 # Loading sea surface temperature range and chlorophyll minimum rasters
 
 temp_raster <- raster("Data/surface_temp.tif")
