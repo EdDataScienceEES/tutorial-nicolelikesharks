@@ -9,6 +9,7 @@
 library(tidyr)
 library(dplyr)
 library(leaflet)
+library(htmlwidgets)
 library(sdmpredictors)
 library(sp)
 library(sf)
@@ -102,6 +103,7 @@ geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
 
 
 # Creating new raster predictor stack---- 
+# Plot occurence points on chlorophyll layer 
 
 predictors <- stack(temp_raster, new_chl)
 pred_crop <- crop(predictors, geographic_extent) # Cropping predictor stack using geographic extend of data
@@ -113,22 +115,64 @@ dev.off()
 
 pdf('Output/chl_layer.pdf') # Saving chlorophyll layer 
 plot(pred_crop, 2) # Viewing second layer of stack (chlorophyll minimum layer)
+chl_ws_map <- points(whale_sharks_latlong2, col='blue')
 dev.off()
 
 pdf('Output/temp_layer.pdf') # Saving temperature layer 
 plot(pred_crop, 1) # Viewing first layer of stack (surface temperature range layer)
-dev.off()
-
-
-# Plot occurence points on chlorophyll layer 
-
-pdf('Output/chl_points_map.pdf') # Saving whale shark occurence points on chlorophyll map
-chl_ws_map <- points(whale_sharks_latlong2, col='blue')
-dev.off()
-
-pdf('Output/temp_points.pdf') # Saving whale shark occurence points on sst map
 temp_ws_map <- points(whale_sharks_latlong2, col='blue')
 dev.off()
+
+
+#Creating interactive bubble map----
+
+# Create a color palette with customizable bins
+
+mybins <- seq(1, 26, by=5)
+mypalette <- colorBin( palette="YlOrBr", whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+
+# Prepare the text for the tooltip
+
+mytext <- paste(
+    "Longitude: ", whale_sharks_latlong$longitude, "<br/>", 
+    "Latitude: ", whale_sharks_latlong$latitude, "<br/>", 
+    "Number of animals: ", whale_sharks_latlong$num_animals, sep="") %>%
+    lapply(htmltools::HTML)
+
+# Creating final interactive Map
+
+int_map <- leaflet(whale_sharks_latlong) %>% 
+    addTiles()  %>% 
+    setView( lat=-27, lng=170 , zoom=4) %>%
+    addProviderTiles("Esri.WorldImagery") %>%
+    addCircleMarkers(~longitude, ~latitude, 
+                     fillColor = ~mypalette(num_animals), fillOpacity = 0.7, color="white", radius=8, stroke=FALSE,
+                     label = mytext,
+                     labelOptions = labelOptions( style = list("font-weight" = "normal", padding = "3px 8px"), textsize = "13px", direction = "auto")
+    ) %>%
+    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" )
+
+
+
+# Save the widget in a html file
+
+
+saveWidget(int_map, file="bubblemap_whalesharks.html")
+
+
+# Leaflet for predictors
+my.sites <- data.frame(Name=c("Faro, Portugal, NE Atlantic" , "Maspalomas, Spain, NE Atlantic" , "Guadeloupe, France, Caribbean Sea" , "Havana, Cuba, Caribbean Sea") , Lon=c(-7.873,-15.539,-61.208,-82.537) , Lat=c(37.047, 27.794,15.957,23.040 ) )
+my.sites
+
+# Visualise sites of interest in google maps
+m <- leaflet()
+m <- addTiles(m)
+m <- addMarkers(m, lng=my.sites$Lon, lat=my.sites$Lat, popup=my.sites$Name)
+m
+
+# Extract environmental values from layers
+my.sites.environment <- data.frame(Name=my.sites$Name , depth=extract(bathymetry,my.sites[,2:3]) , extract(environment.bottom,my.sites[,2:3]) )
+my.sites.environment
 
 
 # Extract values of the predictors at the locations of the points--- 
@@ -151,24 +195,19 @@ pb <- c(rep(1, nrow(extract_pres_ws)), rep(0, nrow(extract_abs_pred)))
 sdmdata <- data.frame(cbind(pb, rbind(extract_pres_ws, extract_abs_pred)))
 
 
-# 
-sdmdata(,'biome') = as.factor(sdmdata(,'biome'))
-head(sdmdata)
+
 
 
 
 
 
 # Inspect available datasets and layers
+library(zoon)
 
 # Filter out terrestrial datasets 
 
-#datasets <- list_datasets(terrestrial = FALSE, marine = TRUE)
-#layers <- list_layers(datasets)
-
-
-
-
+datasets <- list_datasets(terrestrial = FALSE, marine = TRUE)
+layers <- list_layers(datasets) # View layers 
 
 # Loading equal sea surface temperature range and chlorophyll minimum layers 
 
@@ -176,18 +215,30 @@ equal_layers <- load_layers(c("BO_sstrange","BO_chlomin"), equalarea=TRUE)
 
 # Cropping extent to that of Baltic Sea
                             
-temp_chl_maps <- raster::crop(equal_layers, extent(106e5,154e5, -52e5, -13e5))
+australia <- raster::crop(equal_layers, extent(106e5,154e5, -52e5, -13e5))
+plot(australia)
 
-# Plotting
+# Comparing correlations between predictors, globally and for australia 
 
-plot(temp_chl_maps)
+sst_chl_list <- list(BO_sstrange="Sea Surface Temperature", BO_chlomin="Chlorophyll (min)")
+
+p1 <- plotcorr(layers_correlation(equal_layers), sst_chl_list)
+
+australian_correlations <- pearson_correlation_matrix(australia)
+
+p2 <- plot_correlation(australian_correlations, sst_chl_list)
+
+cowplot::plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
+print(correlation_groups(australian_correlations))
+# Fetch occurrences and prepare for ZOON
+occ <- marinespeed::get_occurrences("Dictyota diemensis")
+points <- SpatialPoints(occ[,c("longitude", "latitude")],
+                        lonlatproj)
+points <- spTransform(points, equalareaproj)
+occfile <- tempfile(fileext = ".csv")
+write.csv(cbind(coordinates(points), value=1), occfile)
 
 
-
-
-
-
-# Creating model----
 
 
 
