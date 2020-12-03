@@ -8,8 +8,9 @@
 
 
 ## Whale-come to Spatial Data and Maps part II!
+<img align="center" width="687" height="384" src="./Images/whaleshark_swim.png"> _Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)_
+
 ### What is Species Distribution Modelling?
-[happy whale shark]() Source:
 
 ---------------------------
 Hello everyone! Today we will be building off this [tutorial](https://ourcodingclub.github.io/tutorials/maps/#map_data) which has introduced us to spatial data and creating informative maps. It is recommended to have done part I of this tutorial before starting on this one, and if you need a refresher feel free to take a look before we start! Cool, so now that we've dipped our toes into plotting species occurrence points onto maps, perhaps we can set our sights on a broader horizon- modelling species distributions for conservation and management purposes.
@@ -26,26 +27,19 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
  #### <a href="#section1"> 1. Downloading data </a>
 
- #### <a href="#section1"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
+ #### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
 
 
- #### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
+ #### <a href="#section3"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
 
- #### <a href="#section3"> 4. Creating interactive bubble maps using `leaflet`!  </a>
+ #### <a href="#section4"> 4. Creating interactive bubble maps using `leaflet`!  </a>
 
- We won't be completing the full 5-step process of modelling as we just want to ease into the process by quickly visualizing the potential relationships between whale shark presences with chlorophyll and SST. That being said, there is so much to species distribution modelling, we can explore the statistics behind those relationships, plot even more informative species range predictions and more! If you're intrigued (and of course you are) take a look at some [useful resources](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Useful%20resources) that go in depth, and keep an eye out for our future tutorials that will take a deeper dive into the species distribution modelling.
-
-
-
-
-We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
-
-If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
+ We won't be completing the full 5-step process of modelling in this tutorial as we just want to ease into the process by quickly visualizing the potential relationships between whale shark presences with chlorophyll and SST. Bummer, I know! That being said, there is so much to species distribution modelling, we can explore the statistics behind those relationships, plot even more informative species range predictions and more! So if you're intrigued (and of course you are ;) take a look at some [useful resources](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Useful%20resources) that go in depth, and keep an eye out for our future tutorials that will take a deeper dive into the species distribution modelling.
 
 
 
 
-
+<a href="#section1"></a>
 ## 1. Downloading data
 
 
@@ -79,10 +73,10 @@ library(maptools)
 
 ```
 
-
+<a href="#section2"></a>
 ## 2. Data Preparation: Tidying and formatting data
 
-You can add more text and code, e.g.
+
 
 ```r
 # Loading and preparing data----
@@ -109,7 +103,7 @@ whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
 
 ```
 
-Here you can add some more text if you wish.
+Now we will load our `.tif` files for sea surface temperature (SST) and chlorophyll minimum concentrations accessed from [Bio-ORACLE](https://www.bio-oracle.org/downloads-to-email.php). Bio-ORACLE has future layers for all sorts of predictors (e.g salinity, ice thickness etc.) till 2100!
 
 ```
 # Loading sea surface temperature range and chlorophyll minimum rasters
@@ -118,9 +112,10 @@ temp_raster <- raster("Data/surface_temp.tif")
 chl_raster <- raster("Data/chl_min.tif")
 ```
 
-And finally, plot the data:
 
-```r
+I know we're all itching to get started on mapping, so let's plot our preliminary whale shark occurrence points!
+
+```
 # Preliminary visualization----
 
 # Plot basic whale shark occurence points
@@ -130,8 +125,9 @@ And finally, plot the data:
     geom_point())
 
 ```
+Looks good! For now... Let's see what they look like with the map for Australia. First let's get our map data:
 
-```r
+```
 
 # Obtaining map data
 
@@ -158,19 +154,64 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
     guides(colour=guide_legend(title="Number of whale sharks observed")))
 
 		# Save our plot
-		ggsave("Output/whale_sharks_map")```
+		ggsave("Output/whale_sharks_map.png") # Saving .png version of map
+		ggsave("Output/whale_sharks_map.pdf") # Saving .pdf version of map
+
+```
 
 
 
-This is what our preliminary plot looks like!
+ Here's what our basic map looks like:
 
-<center> <img src="{{ site.baseurl }}/" alt="Img" style="width: 800px;"/> </center>
+<img align="center" width="687" height="384" src="./Output/prelim_whalesharks_map.pdf"> _Figure 2: Occurrence points on basic map_
 
-<a name="section1"></a>
+
+Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence points look like they're on land! Last I checked, whale sharks can't swim on land (they'd all flip out!) so we need to examine and clean our data to resolve this.
+
+<a href="#section3"></a
 
 ## 3. Plotting occurrence data points onto predictor maps
 
-More text, code and images.
+## 4. Plotting interactive bubble maps
+
+```
+# Creating interactive bubble map----
+
+# Create a color palette with customizable bins
+
+mybins <- seq(1, 26, by=5)
+mypalette <- colorBin( palette="YlOrBr", whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+
+# Prepare the text for the tooltip
+
+mytext <- paste(
+    "Longitude: ", whale_sharks_latlong$longitude, "<br/>",
+    "Latitude: ", whale_sharks_latlong$latitude, "<br/>",
+    "Number of animals: ", whale_sharks_latlong$num_animals, sep="") %>%
+    lapply(htmltools::HTML)
+
+# Creating occurrence interactive Map
+
+int_map <- leaflet(whale_sharks_latlong) %>%
+    addTiles()  %>%
+    setView( lat=-27, lng=170 , zoom=4) %>%
+    addProviderTiles("Esri.WorldImagery") %>%
+    addCircleMarkers(~longitude, ~latitude,
+                     fillColor = ~mypalette(num_animals), fillOpacity = 0.7, color="white", radius=8, stroke=FALSE,
+                     label = mytext,
+                     labelOptions = labelOptions( style = list("font-weight" = "normal", padding = "3px 8px"), textsize = "13px", direction = "auto")
+    ) %>%
+    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" )
+
+		# Save the widget in a html file
+
+		saveWidget(int_map, file="bubblemap_whalesharks.html")
+```
+
+Now go to your folder, click on the `.html` link and view your map. You can hover your mouse over the points and view the latitude, longitude and number of animals observed at each individual point. Pretty neat huh?
+
+Okay, next let's make our interactive maps
+
 
 Aaaannd that's a wrap! Congratulations, you can now show off your beautiful maps to your friends and family! In this tutorial we learned:
 
@@ -178,12 +219,11 @@ Aaaannd that's a wrap! Congratulations, you can now show off your beautiful maps
 ##### - How to create basic maps
 ##### - How to create interactive maps.
 
-If you're a real keen bean, try downloading your own species occurrence and climate datasets and create your own maps! Hope to _sea_ you on our next tutorial where we complete the entire process.
-We can also provide some useful links, include a contact form and a way to send feedback.
+If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets. Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predictions! Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial.
 
-For more on `ggplot2`, read the official <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" target="_blank">ggplot2 cheatsheet</a>.
 
-Everything below this is footer material - text and links that appears at the end of all of your tutorials.
+
+
 
 <hr>
 <hr>
@@ -192,7 +232,7 @@ Everything below this is footer material - text and links that appears at the en
 
 #### If you have any questions about completing this tutorial, please contact me at s1761850@ed.ac.uk
 
-#### <a href="INSERT_SURVEY_LINK" target="_blank"> I would love to hear your feedback on the tutorial, whether you did it in the classroom or online!</a>
+#### <a href="INSERT_SURVEY_LINK" target="_blank"> I would love to hear your feedback on the tutorial, feel free to share your experience! </a>
 
 <ul class="social-icons">
 	<li>
