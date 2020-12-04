@@ -261,9 +261,9 @@ Here is your shiny new map! Now without the strange whale sharks that walk among
 
 <img align="center" width="687" height="384" src="./Output/prelim_whalesharks_map.png">
 
+_Figure 3: Occurrence points on map now that false points have been removed_
+
 <a href="#section4"></a>
-
-
 ## 4. Plotting interactive bubble maps
 
 Now here's the part we've all been waiting for! Let's create our interactive bubble maps! But first we have to prepare the raster data. As the raster layers have different extents, let's match them up rebuilding the chlrophyll layer with our temperature layer as reference.
@@ -331,7 +331,7 @@ mytext <- paste(
     "Number of animals: ", whale_sharks_latlong$num_animals, sep="") %>%
     lapply(htmltools::HTML)
 ```
-
+With the help of `leaflet`, let's create our final interactive map. More information on `leaflet` can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Useful%20resources/leaflet_cheatsheet.pdf).
 ```
 # Creating final interactive Map
 
@@ -355,7 +355,9 @@ withr::with_dir('Output', saveWidget(int_map, file="bubblemap_whalesharks.html")
 ```
 This shows up in `RStudio`'s plot viewer on the bottom right, but to view this in your browser, go to your folder, click on the `.html` link and view your map. The link should automatically open in your browser. You can hover your mouse over the points and view the latitude, longitude and number of animals observed at each individual point. Pretty neat huh?
 
-<img align="center" width="687" height="384" src="./assets/img/int_map_ss.png>
+<img align="center" width="687" height="360" src="./assets/img/int_map_ss.png">
+
+_Figure 4: Screenshot of interactive map showing environmental values and number of animals at Long: 116 Lat: -19_
 
 
 Aaaannd that's a wrap! Congratulations, you can now show off your beautiful interactive map to your friends and family! In this tutorial we learned:
@@ -372,7 +374,7 @@ _If you ever get frustrated during coding as we have all experienced on our own 
 
  If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets from open access databases such as GBIF[](). Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predicting future habitat ranges. Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial even if it's just online!
 
-<img align="center" width="687" height="384" src="./assets/img/friends.jpg"> _You are never alone in your coding journey. Source: @wawawiwacomics on Twitter_
+<img align="center" width="680" height="384" src="./assets/img/friends.jpg"> _You are never alone in your coding journey. Source: @wawawiwacomics on Twitter_
 
 
 
@@ -391,7 +393,7 @@ _If you ever get frustrated during coding as we have all experienced on our own 
 
 #### If you have any questions about completing this tutorial, please contact me at s1761850@ed.ac.uk.
 
-####  Please fill out this [survey](https://forms.gle/qs2PfDDbhuU8gb778) if you have time, I would love to hear your feedback on the tutorial. The feedback collected will be used to improve future tutorials, so feel free to share your experience! </a>
+####  Please fill out this [survey](https://forms.gle/qs2PfDDbhuU8gb778) if you have time, I would love to hear your feedback on the tutorial. The feedback collected will be used to improve future tutorials, so feel free to share your experience!
 
 <ul class="social-icons">
 	<li>
