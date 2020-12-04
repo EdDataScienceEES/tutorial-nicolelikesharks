@@ -56,7 +56,7 @@ First, open `RStudio`, create a new script by clicking on `File/ New File/ R Scr
 
 ```r
  # Set the working directory (this is just an example, replace with your own file path)
-setwd("C:/Users/nicol/Documents/Data Science Course/tutorial-nicolelikesharks)
+setwd("C:/Users/nicol/Documents/Data Science Course/tutorial-nicolelikesharks")
 ```
 (Tip for Windows users: If you copy and paste a filepath from Windows Explorer into RStudio, it will appear with backslashes (\ ), but since R requires all filepaths to be written using forward-slashes (/) remember to change those). Next, load the following packages below using `library()`. If you don't have them installed, type `install.packages"package_name"` to install them before loading them.
 
