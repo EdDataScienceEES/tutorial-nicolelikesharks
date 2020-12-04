@@ -45,26 +45,41 @@ colnames(whale_sharks)
 whale_sharks_latlong <- subset(whale_sharks, select=c(oid,latitude,longitude,num_animals)) 
 whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
 
-#eliminate false records (on land)
-data(wrld_simpl)
-plot(wrld_simpl, xlim = c(113, 154), ylim = c(-44, -10), axes=TRUE, col="light yellow")
-
-coordinates(whale_sharks_latlong) <- ~longitude+latitude
-crs(whale_sharks_latlong) <- crs(wrld_simpl)
-class(whale_sharks_latlong)
-class(wrld_simpl)
-
-ovr <- over(whale_sharks_latlong, wrld_simpl)
-cntr <-ovr$NAME
-
-i <-which(!is.na(cntr))
-i
 # Loading sea surface temperature range and chlorophyll minimum rasters
 
 temp_raster <- raster("Data/surface_temp.tif")
 chl_raster <- raster("Data/chl_min.tif")
 
+# Determine the geographic extent of our data 
 
+max.lat = ceiling(max(whale_sharks_latlong$latitude))
+min.lat = floor(min(whale_sharks_latlong$latitude))
+max.lon = ceiling(max(whale_sharks_latlong$longitude))
+min.lon = floor(min(whale_sharks_latlong$longitude))
+geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
+
+#Add chlorophyll and SST data from rasters to our datapoints
+whale_sharks_latlong3 <- whale_sharks_latlong2  # create copy of dataframe coordinates to be converted to SpatialPoints
+coordinates(whale_sharks_latlong3) <- ~longitude+latitude # 
+whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) # add chl data from raster to new column
+whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # # add SST data from raster to new column
+
+
+#eliminate false records (that fall on land)
+
+data(wrld_simpl) # load simple world map
+plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow")
+
+
+crs(whale_sharks_latlong3) <- crs(wrld_simpl) # set same CRS (coordinate reference system)
+class(whale_sharks_latlong3) # check that both are Spatial objects
+class(wrld_simpl)
+
+ovr <- over(whale_sharks_latlong3, wrld_simpl) # check overlaps between world map and data points
+whale_sharks_latlong$country <-ovr$NAME # Add country data to new column
+
+# Only keep values with NA country data, which we can assume are not on land 
+whale_sharks_latlong <- subset(whale_sharks_latlong, is.na(whale_sharks_latlong$country)) 
 
 # Preliminary visualization----
 
@@ -72,7 +87,7 @@ chl_raster <- raster("Data/chl_min.tif")
 
 (prelim_plot <- ggplot(whale_sharks_latlong, aes(x = longitude, y = latitude, 
                                                  colour = num_animals)) +
-    geom_point())
+                geom_point())
 
 
 # Obtaining map data 
@@ -84,7 +99,7 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
 # Plotting points on australia map
 
 (whale_sharks_map <- ggplot() +
-    borders("world", xlim = c(113, 154), ylim = c(-44, -10),
+    borders("world", xlim = c(98, 154), ylim = c(-44, -6),
             colour = "gray40", fill = "gray75", size = 0.3) +
     geom_polygon(data = world_aus, 
                  aes(x = long, y = lat, group = group),
@@ -104,15 +119,6 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
 # Rebuild temperature layer to match chlorophyll layer
 
 new_chl <- raster(vals=values(chl_raster),ext=extent(temp_raster), nrows=dim(temp_raster)[1],ncols=dim(temp_raster)[2])
-
-
-# Determine the geographic extent of our data 
-
-max.lat = ceiling(max(whale_sharks_latlong$latitude))
-min.lat = floor(min(whale_sharks_latlong$latitude))
-max.lon = ceiling(max(whale_sharks_latlong$longitude))
-min.lon = floor(min(whale_sharks_latlong$longitude))
-geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
 
 
 # Creating new raster predictor stack---- 
@@ -141,29 +147,33 @@ dev.off()
 
 # Create a color palette with customizable bins
 
-mybins <- seq(1, 26, by=5)
-mypalette <- colorBin( palette="YlOrBr", whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+mybins <- seq(1, 22, by=2)
+mypalette <- colorBin( palette='PuRd', whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)# Prepare the text for the tooltip
 
-# Prepare the text for the tooltip
+mypalette <-colorNumeric(
+    palette = "PuRd",
+    domain = whale_sharks_latlong$num_animals)
 
 mytext <- paste(
     "Longitude: ", whale_sharks_latlong$longitude, "<br/>", 
     "Latitude: ", whale_sharks_latlong$latitude, "<br/>", 
+    "Chl (mg/m^-3): ", whale_sharks_latlong$chl, "<br/>", 
+    "SST (°C) ", whale_sharks_latlong$temp, "<br/>", 
     "Number of animals: ", whale_sharks_latlong$num_animals, sep="") %>%
     lapply(htmltools::HTML)
 
 # Creating final interactive Map
 
-int_map <- leaflet(whale_sharks_latlong) %>% 
+(int_map <- leaflet(whale_sharks_latlong) %>% 
     addTiles()  %>% 
     setView( lat=-27, lng=170 , zoom=4) %>%
     addProviderTiles("Esri.WorldImagery") %>%
     addCircleMarkers(~longitude, ~latitude, 
-                     fillColor = ~mypalette(num_animals), fillOpacity = 0.7, color="white", radius=8, stroke=FALSE,
+                     fillColor = ~mypalette(num_animals), fillOpacity = 0.8, color="white", radius=8, stroke=FALSE,
                      label = mytext,
                      labelOptions = labelOptions( style = list("font-weight" = "normal", padding = "3px 8px"), textsize = "13px", direction = "auto")
     ) %>%
-    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" )
+    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" ))
 
 
 
