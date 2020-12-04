@@ -4,14 +4,14 @@
 Here's so motivation before we start : ) It's been quite a year, so here's a wholesome comic to hopefully make you smile. 
 
 ![comic](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/assets/img/wholesome_meme.png)  
-Source: @wawawiwacomics on Twitter
+_Yes, yes you do. Source: @wawawiwacomics on Twitter_
 
 ### Description
 This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course run by the University of Edinburgh. The [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) can be found in the relevant [folder](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions).  
 
 
 ### Navigating folders
-assets: This folder contains all the [images]()used for rendering the .md file and the website.   
+assets: This folder contains all the [images](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/assets/img) used for rendering the .md file and the website.   
 Data: This folder contains all the data required can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data)   
 Instructions: This folder contains the [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) and [model template](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/tut_template.md) given for this assignment which can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions)  
 Script: This folder contains the [R script](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Script/sdm_tutorial_nicole.R) and the [.md script]() for the tutorial. They can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Script)    
