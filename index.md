@@ -20,7 +20,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
  # Index:
 
  Whew! That was a lot. Not to worry, here is a quick breakdown of what we will be covering today.
-#### [ 1. Downloading data](#downloading-data)
+
 #### <a href="#section1"> 1. Downloading data </a>
 
 #### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
