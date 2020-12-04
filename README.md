@@ -1,11 +1,22 @@
-# This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course. 
+## This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course. 
 
-## Navigation
-The data required can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data)  
-The scripts can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Script)  
-All the graphs and outputs can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Output)  
+### Description
 
-## Sources:   
+
+
+### Navigating folders
+assets: This folder contains all the [images]()used for rendering the .md file and the website.   
+Data: The data required can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data)   
+Instructions: The [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) and [model template](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/tut_template.md) given for this assignment can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions)  
+Script: The scripts can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Script)    
+Output: All the graphs and outputs can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Output)   
+
+
+### Etiquette
+
+When giving feedback please adhere to guidelies that can be accessed from https://github.com/EdDataScienceEES/DataScienceHub2020/blob/master/etiquette.md
+
+### Sources:   
 Bio_ORACLE Accessed: https://www.bio-oracle.org/downloads-to-email.php on 03/12/2020    
 The R Graph Gallery Accessed: https://www.r-graph-gallery.com/19-map-leafletr.html on 03/12/2020  
 Baez J.C et al., (2019) Accessed: https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5884 on 03/12/2020  
