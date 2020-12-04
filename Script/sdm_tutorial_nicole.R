@@ -178,10 +178,7 @@ mytext <- paste(
 
 
 # Save the widget in a html file
-
-
-saveWidget(int_map, file="bubblemap_whalesharks.html")
-
+withr::with_dir('Output', saveWidget(int_map, file="bubblemap_whalesharks.html"))
 
 # Leaflet for predictors
 my.sites <- data.frame(Name=c("Faro, Portugal, NE Atlantic" , "Maspalomas, Spain, NE Atlantic" , "Guadeloupe, France, Caribbean Sea" , "Havana, Cuba, Caribbean Sea") , Lon=c(-7.873,-15.539,-61.208,-82.537) , Lat=c(37.047, 27.794,15.957,23.040 ) )
