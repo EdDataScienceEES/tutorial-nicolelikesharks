@@ -43,6 +43,7 @@ whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
 temp_raster <- raster("Data/surface_temp.tif")
 chl_raster <- raster("Data/chl_min.tif")
 
+
 # Determine the geographic extent of our data 
 
 max.lat = ceiling(max(whale_sharks_latlong$latitude))
@@ -51,6 +52,18 @@ max.lon = ceiling(max(whale_sharks_latlong$longitude))
 min.lon = floor(min(whale_sharks_latlong$longitude))
 geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
 
+
+# Obtaining map data 
+
+world <- getMap(resolution = "low")
+world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
+
+# Load simple world map
+
+data(wrld_simpl)
+plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow") # Zooming into region of interest
+
+
 #Add chlorophyll and SST data from rasters to our datapoints
 whale_sharks_latlong3 <- whale_sharks_latlong2  # create copy of dataframe coordinates to be converted to SpatialPoints
 coordinates(whale_sharks_latlong3) <- ~longitude+latitude # 
@@ -58,13 +71,43 @@ whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) # add chl
 whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # # add SST data from raster to new column
 
 
+# Preliminary data visualization---- 
+
+# Plot basic whale shark occurence points 
+
+(prelim_plot <- ggplot(whale_sharks_latlong, aes(x = longitude, y = latitude, 
+                                                 colour = num_animals)) +
+        geom_point())
+
+
+
+# Plotting points on australia map
+
+(raw_whale_sharks_map <- ggplot() +
+        borders("world", xlim = c(98, 154), ylim = c(-44, -6),
+                colour = "gray40", fill = "gray75", size = 0.3) +
+        geom_polygon(data = world_aus, 
+                     aes(x = long, y = lat, group = group),
+                     fill = NA, colour = "blue") + 
+        geom_point(data = whale_sharks_latlong,  # Add and plot species data
+                   aes(x = longitude, y = latitude, 
+                       colour = num_animals)) +
+        scale_colour_viridis(option = "inferno") +
+        coord_quickmap() +  # Prevents stretching when resizing
+        theme_map() +  # Remove ugly grey background
+        theme(legend.position=c(0.9,0.5))+
+        xlab("Longitude") +
+        ylab("Latitude") + 
+        guides(colour=guide_legend(title="Number of whale sharks observed")))
+
+
+# Saving maps 
+
+ggsave("Output/raw_whalesharks_map.pdf",raw_whale_sharks_map)
+ggsave("Output/raw_whalesharks_map.png",raw_whale_sharks_map)
+
+
 # Eliminate false records that fall on land
-
-# Load simple world map
-
-data(wrld_simpl)
-plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow") # Zooming into region of interest
-
 
 # Setting same CRS (coordinate reference system)
 
@@ -91,20 +134,7 @@ whale_sharks_latlong$country <-ovr$NAME
 whale_sharks_latlong <- subset(whale_sharks_latlong, is.na(whale_sharks_latlong$country)) 
 
 
-# Preliminary visualization----
-
-# Plot basic whale shark occurence points 
-
-(prelim_plot <- ggplot(whale_sharks_latlong, aes(x = longitude, y = latitude, 
-                                                 colour = num_animals)) +
-                geom_point())
-
-
-# Obtaining map data 
-
-world <- getMap(resolution = "low")
-world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
-
+# Data visualization----
 
 # Plotting points on australia map
 

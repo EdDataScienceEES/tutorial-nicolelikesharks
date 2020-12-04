@@ -22,9 +22,9 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
  Whew! That was a lot. Not to worry, here is a quick breakdown of what we will be covering today.
 
-#### <a href="#section1"> 1. Downloading data </a>
+#### <a href="#section1"> 1. Workspace Organisation and Downloading data </a>
 
-#### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
+#### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `subset()`</a>
 
 #### <a href="#section3"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
 
@@ -36,7 +36,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
 
 <a href="#section1"></a>
-## 1. Downloading data
+## 1. Workspace Organisation and Downloading data
 
  It might seem daunting to find datasets in the huge realm we call the internet, but thanks to open source databases such as [GBIF](https://www.gbif.org/) and [OBIS](https://obis.org/), we can easily download the species occurence data we need. In this tutorial we've already downloaded the [whale shark occurrence dataset](https://github.com/nicolelikesharks/tutorial_SpatialData2/blob/main/whale_sharks_ningaloo.csv) in this open [GitHub folder](https://github.com/nicolelikesharks/tutorial_SpatialData2). As for our environmental predictor data, we've also downloaded them from Bio-ORACLE into the same folder.
 
@@ -67,7 +67,7 @@ library(maptools) # Tools for handling spatial objects
 <a href="#section2"></a>
 ## 2. Data Preparation: Tidying and formatting data
 
-Often data preperation take
+Let's load and inspect our data. Upon looking at the columns via `colnames()`, it seems like we have quite a number of redundant columns. To streamline the data we're working with, let's only keep the ones we need. We can do so by creating subsets of the original whale shark dataset and using select() to choose the columns we are interested in.
 
 ```r
 # Loading and preparing data----
@@ -82,7 +82,7 @@ head(whale_sharks)
 
 dim(whale_sharks)
 
-# Viewing column names
+# Viewing column names # Seems like there are a fair few columns! Are there any we don't need?
 
 colnames(whale_sharks)
 
@@ -92,9 +92,10 @@ colnames(whale_sharks)
 whale_sharks_latlong <- subset(whale_sharks, select=c(oid,latitude,longitude,num_animals))
 whale_sharks_latlong2 <- subset(whale_sharks, select=c(longitude,latitude))
 
+
 ```
 
-Now we will load our `.tif` files for sea surface temperature (SST) and chlorophyll minimum concentrations accessed from [Bio-ORACLE](https://www.bio-oracle.org/downloads-to-email.php). Bio-ORACLE has future layers for all sorts of predictors (e.g salinity, ice thickness etc.) till 2100!
+Now we will load our `.tif` files for sea surface temperature (SST) and chlorophyll minimum concentrations accessed from [Bio-ORACLE](https://www.bio-oracle.org/downloads-to-email.php). Bio-ORACLE has future layers for all sorts of predictors (e.g salinity, ice thickness etc.) till 2100! We load the `.tif` files using the raster() function and create new raster layer objects for them both.
 
 ```
 # Loading sea surface temperature range and chlorophyll minimum rasters
@@ -102,9 +103,26 @@ Now we will load our `.tif` files for sea surface temperature (SST) and chloroph
 temp_raster <- raster("Data/surface_temp.tif")
 chl_raster <- raster("Data/chl_min.tif")
 ```
+Next, we examine and determine the geographic extent of our data. The `max()` and `min()` functions return the maximum and minimum values of the given column respectively. The `ceiling()` and `floor()` functions are used to round the number up and down respectively to the nearest integer.
 
 
-I know we're all itching to get started on mapping, so let's plot our preliminary whale shark occurrence points!
+```
+# Determine the geographic extent of our data.
+
+max.lat = ceiling(max(whale_sharks_latlong$latitude))
+min.lat = floor(min(whale_sharks_latlong$latitude))
+max.lon = ceiling(max(whale_sharks_latlong$longitude))
+min.lon = floor(min(whale_sharks_latlong$longitude))
+geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
+
+# Add chlorophyll and SST data from rasters to our datapoints
+whale_sharks_latlong3 <- whale_sharks_latlong2  # Create copy of dataframe coordinates to be converted to SpatialPoints
+coordinates(whale_sharks_latlong3) <- ~longitude+latitude #
+whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) # Add chl data from raster to new column
+whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # Add SST data from raster to new column
+```
+
+Okay, I know we're all itching to get started on mapping, so let's plot our preliminary whale shark occurrence points! ggplot2() to the rescue! If you are new to ggplot2(), here is a useful [cheatsheet](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Useful%20resources/ggplot2_cheatsheet.pdf) to kickstart your data visualization dreams.
 
 ```
 # Preliminary visualization----
@@ -116,7 +134,7 @@ I know we're all itching to get started on mapping, so let's plot our preliminar
     geom_point())
 
 ```
-Looks good! For now... Let's see what they look like with the map for Australia. First let's get our map data:
+Looks good! For now... Let's see what they look like with the map for Australia. First let's get our map data for the world using getMap() under the `rworldmap` package. We then obtain the Australian map by setting the admin field to Australia.
 
 ```
 
@@ -150,8 +168,6 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
 
 ```
 
-
-
  Here's what our basic map looks like:
 
 <img align="center" width="821" height="430" src="./Output/prelim_whalesharks_map.png">
@@ -167,54 +183,61 @@ Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence p
 
 ## 4. Plotting interactive bubble maps
 
-Now here's the part we've all been waiting for! Let's create our interactive bubble maps! We first create a colour palette with customizable bins. By viewing `whale_sharks_latlong` we see that the number of records range from 1-21. So here, we are creating equally spaced bins (in increments of 3) to encompass the number of animals observed at a certain point. We created `mypalette` by set the colour of points to change from Yellow-Orange-Brown with increasing observations.
+Now here's the part we've all been waiting for! Let's create our interactive bubble maps! We first create a colour palette with customizable bins. By viewing `whale_sharks_latlong` we see that the number of records range from 1-21. So here, we are creating equally spaced bins (in increments of 2) to encompass the number of animals observed at a certain point. We created `mypalette` by setting the colour of points to change from light purple to red with increasing number of observations.
 
 ```
 # Creating interactive bubble map----
 
 # Create a color palette with customizable bins
 
-mybins <- seq(1, 26, by=5)
-mypalette <- colorBin( palette="YlOrBr", whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+mybins <- seq(1, 22, by=2)
+mypalette <- colorBin( palette='PuRd', whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)# Prepare the text for the tooltip
 
-# Prepare the text for the tooltip
+mypalette <-colorNumeric(
+    palette = "PuRd",
+    domain = whale_sharks_latlong$num_animals)
 
 mytext <- paste(
     "Longitude: ", whale_sharks_latlong$longitude, "<br/>",
     "Latitude: ", whale_sharks_latlong$latitude, "<br/>",
+    "Chl (mg/m^-3): ", whale_sharks_latlong$chl, "<br/>",
+    "SST (°C) ", whale_sharks_latlong$temp, "<br/>",
     "Number of animals: ", whale_sharks_latlong$num_animals, sep="") %>%
     lapply(htmltools::HTML)
 
-# Creating occurrence interactive Map
+# Creating final interactive Map
 
-int_map <- leaflet(whale_sharks_latlong) %>%
+(int_map <- leaflet(whale_sharks_latlong) %>%
     addTiles()  %>%
     setView( lat=-27, lng=170 , zoom=4) %>%
     addProviderTiles("Esri.WorldImagery") %>%
     addCircleMarkers(~longitude, ~latitude,
-                     fillColor = ~mypalette(num_animals), fillOpacity = 0.7, color="white", radius=8, stroke=FALSE,
+                     fillColor = ~mypalette(num_animals), fillOpacity = 0.8, color="white", radius=8, stroke=FALSE,
                      label = mytext,
                      labelOptions = labelOptions( style = list("font-weight" = "normal", padding = "3px 8px"), textsize = "13px", direction = "auto")
     ) %>%
-    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" )
+    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" ))
 
-		# Save the widget in a html file
 
-		saveWidget(int_map, file="bubblemap_whalesharks.html")
+
+# Save the widget in a .html file
+
+withr::with_dir('Output', saveWidget(int_map, file="bubblemap_whalesharks.html"))
+
 ```
 
-Now go to your folder, click on the `.html` link and view your map. You can hover your mouse over the points and view the latitude, longitude and number of animals observed at each individual point. Pretty neat huh?
+This shows up in `RStudio`'s plot viewer on the bottom right, but to view this in your browser, go to your folder, click on the `.html` link and view your map. The link should automatically open in your browser. You can hover your mouse over the points and view the latitude, longitude and number of animals observed at each individual point. Pretty neat huh?
 
-Okay, next let's make our interactive maps
+<img align="center" width="687" height="384" src="./assets/img/int_map_ss.png
 
 
-Aaaannd that's a wrap! Congratulations, you can now show off your beautiful maps to your friends and family! In this tutorial we learned:
+Aaaannd that's a wrap! Congratulations, you can now show off your beautiful interactive map to your friends and family! In this tutorial we learned:
 
 ##### - What Species Distribution Modelling is, why and how we use it.
 ##### - How to create basic maps
 ##### - How to create interactive maps.
 
-If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets. Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predicting future habitat ranges. Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial.
+We've come a long way! Be proud of yourselves. If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets from open access databases such as GBIF[](). Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predicting future habitat ranges. Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial.
 
 
 
