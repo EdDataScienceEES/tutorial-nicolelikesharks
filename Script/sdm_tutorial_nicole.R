@@ -6,24 +6,17 @@
 
 # Libraries---- 
 
-library(tidyr)
-library(dplyr)
 library(leaflet)
 library(htmlwidgets)
-library(sdmpredictors)
 library(sp)
-library(sf)
-library(rgdal)
 library(raster)
 library(ggplot2)
 library(ggthemes)
 library(viridis)
-library(rasterVis)
-library(maps)
 library(rworldmap)
 library(maptools)
 
-# Loading and preparing data---- 
+# Loading and tidying data---- 
 
 whale_sharks <- read.csv("Data/whale_sharks_ningaloo.csv")
 
@@ -65,21 +58,38 @@ whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) # add chl
 whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # # add SST data from raster to new column
 
 
-#eliminate false records (that fall on land)
+# Eliminate false records that fall on land
 
-data(wrld_simpl) # load simple world map
-plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow")
+# Load simple world map
+
+data(wrld_simpl)
+plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow") # Zooming into region of interest
 
 
-crs(whale_sharks_latlong3) <- crs(wrld_simpl) # set same CRS (coordinate reference system)
-class(whale_sharks_latlong3) # check that both are Spatial objects
-class(wrld_simpl)
+# Setting same CRS (coordinate reference system)
 
-ovr <- over(whale_sharks_latlong3, wrld_simpl) # check overlaps between world map and data points
-whale_sharks_latlong$country <-ovr$NAME # Add country data to new column
+crs(whale_sharks_latlong3) <- crs(wrld_simpl) 
+
+
+# Checking that they are spatial objects
+
+class(whale_sharks_latlong3) 
+class(wrld_simpl) 
+
+
+# Check overlaps between world map and data points
+
+ovr <- over(whale_sharks_latlong3, wrld_simpl) 
+
+# Add country data to new column
+
+whale_sharks_latlong$country <-ovr$NAME 
+
 
 # Only keep values with NA country data, which we can assume are not on land 
+
 whale_sharks_latlong <- subset(whale_sharks_latlong, is.na(whale_sharks_latlong$country)) 
+
 
 # Preliminary visualization----
 
@@ -115,6 +125,9 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
     ylab("Latitude") + 
     guides(colour=guide_legend(title="Number of whale sharks observed")))
 
+
+# Saving maps 
+
 ggsave("Output/prelim_whalesharks_map.pdf",whale_sharks_map)
 ggsave("Output/prelim_whalesharks_map.png",whale_sharks_map)
 
@@ -124,11 +137,13 @@ new_chl <- raster(vals=values(chl_raster),ext=extent(temp_raster), nrows=dim(tem
 
 
 # Creating new raster predictor stack---- 
+
 # Plot occurence points on chlorophyll layer 
 
 predictors <- stack(temp_raster, new_chl)
 pred_crop <- crop(predictors, geographic_extent) # Cropping predictor stack using geographic extend of data
 
+# Saving outputs 
 
 pdf('Output/cropped_predictor_stack.pdf') # Saving cropped predictor stack
 png('Output/cropped_predictor_stack.png') # Saving cropped predictor stack
@@ -185,6 +200,7 @@ mytext <- paste(
 
 
 
-# Save the widget in a html file
+# Save the widget in a .html file
+
 withr::with_dir('Output', saveWidget(int_map, file="bubblemap_whalesharks.html"))
 
