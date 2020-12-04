@@ -1,26 +1,24 @@
-<center><img src="{{ site.baseurl }}/tutheader_spatialmaps.png" alt="Img"></center>
+<center><img src="{{ site.baseurl }}/tutheaderbl.png" alt="Img"></center>
 
 To add images, replace `tutheaderbl1.png` with the file name of any image you upload to your GitHub repository.
 
 ### Tutorial Aims
 
-#### <a href="#section1"> 1. Tidying and formatting data </a>
+#### <a href="#section1"> 1. The first section</a>
 
-#### <a href="#section1"> 2. Learning the basics of Species Distribution Modelling (SDM) </a>
+#### <a href="#section2"> 2. The second section</a>
 
-#### <a href="#section2"> 3. Creating basic maps using occurrence data and environmental data </a>
+#### <a href="#section3"> 3. The third section</a>
 
-#### <a href="#section3"> 4. Creating interactive bubble maps! </a>
-
-### Welcome to Spatial Data and Maps (II)!
+You can read this text, then delete it and replace it with your text about your tutorial: what are the aims, what code do you need to achieve them?
 ---------------------------
 We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
 
 To create subheadings, you can use `#`, e.g. `# Subheading 1` creates a subheading with a large font size. The more hashtags you add, the smaller the text becomes. If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
 
-# What is Species Distribution Modelling (SDM)?
-##
-###
+# Subheading 1
+## Subheading 2
+### Subheading 3
 
 This is some introductory text for your tutorial. Explain the skills that will be learned and why they are important. Set the tutorial in context.
 
