@@ -1,5 +1,6 @@
+# Spatial data and maps (II)
 
-# Tutorial Aims:
+## Tutorial Aims:
 We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
 
 If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
@@ -12,7 +13,9 @@ If you want to make text bold, you can surround it with `__text__`, which create
 
 
 ## Whale-come to Spatial Data and Maps part II!
-<img align="center" width="687" height="384" src="./Images/whaleshark_swim.png"> _Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)_
+<img align="center" width="687" height="384" src="./Images/whaleshark_swim.png">  
+
+*Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)*
 
 ### What is Species Distribution Modelling?
 
@@ -169,7 +172,9 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
 
  Here's what our basic map looks like:
 
-<img align="center" width="687" height="384" src="./Output/prelim_whalesharks_map.png"> _Figure 2: Occurrence points on basic map_
+<img align="center" width="821" height="430" src="./Output/prelim_whalesharks_map.png">
+
+_Figure 2: Occurrence points on basic map_
 
 
 Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence points look like they're on land! Last I checked, whale sharks can't swim on land (they'd all flip out!) so we need to examine and clean our data to resolve this.
