@@ -129,17 +129,23 @@ pred_crop <- crop(predictors, geographic_extent) # Cropping predictor stack usin
 
 
 pdf('Output/cropped_predictor_stack.pdf') # Saving cropped predictor stack
+png('Output/cropped_predictor_stack.png') # Saving cropped predictor stack
 plot(pred_crop) # Viewing cropped predictor stack
 dev.off()
+dev.off()
 
-pdf('Output/chl_layer.pdf') # Saving chlorophyll layer 
+pdf('Output/chl_layer.pdf') # Saving chlorophyll layer
+png('Output/chl_layer.png') # Saving chlorophyll layer 
 plot(pred_crop, 2) # Viewing second layer of stack (chlorophyll minimum layer)
 chl_ws_map <- points(whale_sharks_latlong2, col='blue')
 dev.off()
+dev.off()
 
 pdf('Output/temp_layer.pdf') # Saving temperature layer 
+png('Output/temp_layer.png') # Saving temperature layer 
 plot(pred_crop, 1) # Viewing first layer of stack (surface temperature range layer)
 temp_ws_map <- points(whale_sharks_latlong2, col='blue')
+dev.off()
 dev.off()
 
 
