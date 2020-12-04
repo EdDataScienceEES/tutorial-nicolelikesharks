@@ -31,7 +31,7 @@ Hijmans R.J  and Elith J (2020) Accessed: https://rspatial.org/raster/sdm/4_sdm_
 OBIS (2020) Accessed: https://obis.org/ on 03/12/2020  
 Oliver J (2020) Accessed: https://jcoliver.github.io/learn-r/011-species-distribution-models.html on 03/12/2020
 The R Graph Gallery (2018) Accessed: https://www.r-graph-gallery.com/19-map-leafletr.html on 03/12/2020   
-RStudio (2015) https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+RStudio (2015) https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf  
 Shi K.J (2017) https://ugoproto.github.io/ugo_r_doc/pdf/leaflet-cheat-sheet.pdf
 Wawawiwacomics (2020) Accessed: https://twitter.com/wawawiwacomics/status/1266321117486211072/photo/1 on 03/12/2020
 
