@@ -6,9 +6,9 @@ If you want to make text bold, you can surround it with `__text__`, which create
 
 
 
-#### <a href="#section1"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
+#### <a href="#section4"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
 
-#### <a href="#section2"> 2. Creating maps visualizing current and future distributions
+#### <a href="#section5"> 2. Creating maps visualizing current and future distributions
 
 
 ## Whale-come to Spatial Data and Maps part II!
@@ -169,7 +169,7 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
 
  Here's what our basic map looks like:
 
-<img align="center" width="687" height="384" src="./Output/prelim_whalesharks_map.pdf"> _Figure 2: Occurrence points on basic map_
+<img align="center" width="687" height="384" src="./Output/prelim_whalesharks_map.png"> _Figure 2: Occurrence points on basic map_
 
 
 Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence points look like they're on land! Last I checked, whale sharks can't swim on land (they'd all flip out!) so we need to examine and clean our data to resolve this.
@@ -180,7 +180,7 @@ Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence p
 
 ## 4. Plotting interactive bubble maps
 
-Now here's the part we've all been waiting for! Let's create our interactive bubble maps! We first create a colour palette with customizable bins. What these are 
+Now here's the part we've all been waiting for! Let's create our interactive bubble maps! We first create a colour palette with customizable bins. By viewing `whale_sharks_latlong` we see that the number of records range from 1-21. So here, we are creating equally spaced bins (in increments of 3) to encompass the number of animals observed at a certain point. We created `mypalette` by set the colour of points to change from Yellow-Orange-Brown with increasing observations.
 
 ```
 # Creating interactive bubble map----
@@ -227,7 +227,7 @@ Aaaannd that's a wrap! Congratulations, you can now show off your beautiful maps
 ##### - How to create basic maps
 ##### - How to create interactive maps.
 
-If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets. Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predictions! Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial.
+If you're a real keen bean, try choosing your favourite species (I chose mine for this tutorial) and downloading their occurrence and climate datasets. Have a think about the drivers that might influence their future distributions and have a go at creating your very own maps! Next up, we'll properly embark on model fitting, model assessment and finally predicting future habitat ranges. Thank you for joining me on this voyage (and putting up with all the bad marine puns!) I hope to _sea_ you at our next tutorial.
 
 
 
@@ -240,7 +240,7 @@ If you're a real keen bean, try choosing your favourite species (I chose mine fo
 
 #### If you have any questions about completing this tutorial, please contact me at s1761850@ed.ac.uk
 
-#### <a href="INSERT_SURVEY_LINK" target="_blank"> I would love to hear your feedback on the tutorial, feel free to share your experience! </a>
+#### <a href="https://forms.gle/qs2PfDDbhuU8gb778" target="_blank"> Please fill out this survey if you have time, I would love to hear your feedback on the tutorial. The feedback collected will be used to improve future tutorials, so feel free to share your experience! </a>
 
 <ul class="social-icons">
 	<li>
