@@ -1,13 +1,16 @@
-# This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science for EES course. 
+# This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course. 
 
 ## Navigation
-The data required can be found [here]()  
-The scripts can be found [here]()  
-All the graphs and outputs can be found [here]()  
+The data required can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data)  
+The scripts can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Script)  
+All the graphs and outputs can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Output)  
 
 ## Sources:   
-Bio_ORACLE Accessed: https://www.bio-oracle.org/downloads-to-email.php on 03/12/2020  
+Bio_ORACLE Accessed: https://www.bio-oracle.org/downloads-to-email.php on 03/12/2020    
 The R Graph Gallery Accessed: https://www.r-graph-gallery.com/19-map-leafletr.html on 03/12/2020  
+Baez J.C et al., (2019) Accessed: https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5884 on 03/12/2020  
+Hijmans R.J  and Elith J (2020) Accessed: https://rspatial.org/raster/sdm/4_sdm_envdata.html on 03/12/2020  
+Bosch S (2020) Accessed: https://cran.r-project.org/web/packages/sdmpredictors/vignettes/quickstart.html on 03/12/2020  
 
 
 ## Acknowledgements: 
