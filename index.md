@@ -9,7 +9,7 @@ If you want to make text bold, you can surround it with `__text__`, which create
 
 #### <a href="#section1"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
 
-#### <a href="#section2"> 2. Creating maps visualizing current and future distributions
+#### <a href="#section2"> 2. Creating maps visualizing current and future distributions </a>
 
 
 ## Whale-come to Spatial Data and Maps part II!
