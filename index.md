@@ -1,5 +1,9 @@
 
 # Tutorial Aims:
+We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
+
+If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
+
 
 
 #### <a href="#section1"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
@@ -19,7 +23,8 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
 
 
- Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift? Building an SDM requires mindful consideration of specific predictors driving the variability in species occurrence. Since multiple studies have related whale shark presences with chlorophyll concentrations (as a proxy for prey abundance) as well as sea surface temperature (SST) between the range of ..., we shall pick these drivers as our environmental predictors. For our tutorial, we will be thus be incorporating whale shark occurrence data with chlorophyll and SST data to create interactive maps visualizing their current and future distributions.  All the data required for this tutorial can be accessed [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data) from <a href="https://github.com/EdDataScienceEES/tutorial-nicolelikesharks" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it into your desired folder.
+ Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift? Building an SDM requires mindful consideration of specific predictors driving the variability in species occurrence.
+  Since multiple studies have related whale shark presences with chlorophyll concentrations (as a proxy for prey abundance) as well as sea surface temperature (SST) between the range of ..., we shall pick these drivers as our environmental predictors. For our tutorial, we will be thus be incorporating whale shark occurrence data with chlorophyll and SST data to create interactive maps visualizing their current and future distributions.  All the data required for this tutorial can be accessed [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data) from <a href="https://github.com/EdDataScienceEES/tutorial-nicolelikesharks" target="_blank">this GitHub repository</a>. Clone and download the repo as a zip file, then unzip it into your desired folder.
 
  # Index:
 
@@ -42,6 +47,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 <a href="#section1"></a>
 ## 1. Downloading data
 
+ It might seem daunting to find datasets in the huge realm we call the internet, but thanks to open source databases such as [GBIF] (https://www.gbif.org/) and [OBIS (https://obis.org/), we can easily download the species occurence data we need. In this tutorial we've already downloaded the [whale shark occurrence dataset]() in this [GitHub folder](). As for our environmental predictor data, we've also downloaded them from Bio-ORACLE [here]().
 
 First, open `RStudio`, create a new script by clicking on `File/ New File/ R Script`. If you are unfamiliar with `RStudio` and don't know where to start, this introductory [tutorial](https://ourcodingclub.github.io/tutorials/intro-to-r/index.html) might help! Next set the working directory like so:
 
@@ -173,6 +179,8 @@ Hmmm... can you spot (pun intended!) what might be wrong here? Some occurrence p
 ## 3. Plotting occurrence data points onto predictor maps
 
 ## 4. Plotting interactive bubble maps
+
+Now here's the part we've all been waiting for! Let's create our interactive bubble maps! We first create a colour palette with customizable bins. What these are 
 
 ```
 # Creating interactive bubble map----
