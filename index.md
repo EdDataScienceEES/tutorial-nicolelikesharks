@@ -1,7 +1,7 @@
 # Spatial data and maps (II)
 
 ## Whale-come to Spatial Data and Maps part II!
-<img align="center" width="687" height="384" src="./Images/whaleshark_swim.png">  
+<img align="center" width="687" height="384" src="./assets/img/whaleshark_swim.png">  
 
 *Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)*
 
@@ -12,6 +12,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
  Here's where Species Distribution Models (SDMs) come in! They've gained popularity due to their ease of use and low data requirements. Beyond visualizing species distributions, SDMs can help us explore the patterns and processes behind the observed distribution of species. Thus, SDMs can be used to predict and project shifts in a species' potential future geographic range, encompassing both seasonal and temporal variability- no crystal gazing required! Let's quickly break it down. Species Distribution Modelling typically encompasses 5 main steps (1) conceptualization, (2) data preparation, (3) model fitting, (4) model assessment, and (5) prediction (Figure 1).
 
+<img align="center" width="687" height="384" src="./assets/img/SDM_steps.png">
 
 
  Given the global climate change and subsequent changes in environmental predictors such as the above, how might a species' distributions shift? Building an SDM requires mindful consideration of specific predictors driving the variability in species occurrence.
@@ -37,7 +38,7 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 <a href="#section1"></a>
 ## 1. Downloading data
 
- It might seem daunting to find datasets in the huge realm we call the internet, but thanks to open source databases such as [GBIF] (https://www.gbif.org/) and [OBIS (https://obis.org/), we can easily download the species occurence data we need. In this tutorial we've already downloaded the [whale shark occurrence dataset]() in this [GitHub folder](). As for our environmental predictor data, we've also downloaded them from Bio-ORACLE [here]().
+ It might seem daunting to find datasets in the huge realm we call the internet, but thanks to open source databases such as [GBIF](https://www.gbif.org/) and [OBIS](https://obis.org/), we can easily download the species occurence data we need. In this tutorial we've already downloaded the [whale shark occurrence dataset](https://github.com/nicolelikesharks/tutorial_SpatialData2/blob/main/whale_sharks_ningaloo.csv) in this open [GitHub folder](https://github.com/nicolelikesharks/tutorial_SpatialData2). As for our environmental predictor data, we've also downloaded them from Bio-ORACLE into the same folder.
 
 First, open `RStudio`, create a new script by clicking on `File/ New File/ R Script`. If you are unfamiliar with `RStudio` and don't know where to start, this introductory [tutorial](https://ourcodingclub.github.io/tutorials/intro-to-r/index.html) might help! Next set the working directory like so:
 
@@ -50,29 +51,23 @@ setwd("C:/Users/nicol/Documents/Data Science Course/tutorial-nicolelikesharks")
 ```
 # Libraries----
 
-library(tidyr)
-library(dplyr)
+
 library(leaflet) # For creating our interactive maps
-library(htmlwidgets)
-library(sdmpredictors) # Package for all our SDM needs
-library(sp)
-library(sf)
-library(rgdal)
-library(raster)
-library(ggplot2) # For creating maps
-library(ggthemes) # For choosing our map theme
-library(viridis) # Colour palette that colour-blind friendly
-library(rasterVis)
-library(maps)
-library(rworldmap)
-library(maptools)
+library(htmlwidgets) # Used to save interactive bubble maps
+library(sp) # For working with spatial data
+library(raster) # For working with raster data
+library(ggplot2) # For creating plots
+library(ggthemes) # For choosing our plot theme
+library(viridis) # Colour palette that is colour-blind friendly
+library(rworldmap) # For getting world map
+library(maptools) # Tools for handling spatial objects
 
 ```
 
 <a href="#section2"></a>
 ## 2. Data Preparation: Tidying and formatting data
 
-
+Often data preperation take
 
 ```r
 # Loading and preparing data----
