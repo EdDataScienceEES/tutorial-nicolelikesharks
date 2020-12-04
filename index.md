@@ -1,17 +1,5 @@
 # Spatial data and maps (II)
 
-## Tutorial Aims:
-We are using `<a href="#section_number">text</a>` to create anchors within our text. For example, when you click on section one, the page will automatically go to where you have put `<a name="section_number"></a>`.
-
-If you want to make text bold, you can surround it with `__text__`, which creates __text__. For italics, use only one understore around the text, e.g. `_text_`, _text_.
-
-
-
-#### <a href="#section4"> 1. Learning the basics of Species Distribution Modelling (SDM) </a>
-
-#### <a href="#section5"> 2. Creating maps visualizing current and future distributions
-
-
 ## Whale-come to Spatial Data and Maps part II!
 <img align="center" width="687" height="384" src="./Images/whaleshark_swim.png">  
 
@@ -33,14 +21,13 @@ Hello everyone! Today we will be building off this [tutorial](https://ourcodingc
 
  Whew! That was a lot. Not to worry, here is a quick breakdown of what we will be covering today.
 
- #### <a href="#section1"> 1. Downloading data </a>
+#### <a href="#section1"> 1. Downloading data </a>
 
- #### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
+#### <a href="#section2"> 2. Data Preparation: Tidying and formatting data using `tidyverse`</a>
 
+#### <a href="#section3"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
 
- #### <a href="#section3"> 3. Creating basic maps using occurrence data and environmental data using `ggplot2` </a>
-
- #### <a href="#section4"> 4. Creating interactive bubble maps using `leaflet`!  </a>
+#### <a href="#section4"> 4. Creating interactive bubble maps using `leaflet`!  </a>
 
  We won't be completing the full 5-step process of modelling in this tutorial as we just want to ease into the process by quickly visualizing the potential relationships between whale shark presences with chlorophyll and SST. Bummer, I know! That being said, there is so much to species distribution modelling, we can explore the statistics behind those relationships, plot even more informative species range predictions and more! So if you're intrigued (and of course you are ;) take a look at some [useful resources](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Useful%20resources) that go in depth, and keep an eye out for our future tutorials that will take a deeper dive into the species distribution modelling.
 
