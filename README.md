@@ -1,8 +1,10 @@
 # Spatial Data and Maps (II) Tutorial 
 
-## Here is the [link](https://eddatascienceees.github.io/tutorial-nicolelikesharks/) to the tutorial that will introduce you to species distribution modelling and plotting interactive bubble maps. [This](https://github.com/nicolelikesharks/tutorial_SpatialData2) public repository is where you can access the data needed to complete this tutorial. Good luck and Merry Coding! Here's so motivation before we start : ) It's been quite a year, so here's a wholesome comic to hopefully make you smile. 
+## Here is the [link](https://eddatascienceees.github.io/tutorial-nicolelikesharks/) to the tutorial that will introduce you to species distribution modelling and plotting interactive bubble maps. [This](https://github.com/nicolelikesharks/tutorial_SpatialData2) public repository is where you can access the data needed to complete this tutorial.  Good luck and merry coding! 
+Here's so motivation before we start : ) It's been quite a year, so here's a wholesome comic to hopefully make you smile. 
 
-![comic](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/assets/img/wholesome_meme.png)
+![comic](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/assets/img/wholesome_meme.png)  
+Source: @wawawiwacomics on Twitter
 
 ### Description
 This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course run by the University of Edinburgh. The [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) can be found in the relevant [folder](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions).  
