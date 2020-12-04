@@ -110,11 +110,13 @@ world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
     scale_colour_viridis(option = "inferno") +
     coord_quickmap() +  # Prevents stretching when resizing
     theme_map() +  # Remove ugly grey background
+    theme(legend.position=c(0.9,0.5))+
     xlab("Longitude") +
     ylab("Latitude") + 
     guides(colour=guide_legend(title="Number of whale sharks observed")))
 
-
+ggsave("Output/prelim_whalesharks_map.pdf",whale_sharks_map)
+ggsave("Output/prelim_whalesharks_map.png",whale_sharks_map)
 
 # Rebuild temperature layer to match chlorophyll layer
 
@@ -185,155 +187,4 @@ mytext <- paste(
 
 # Save the widget in a html file
 withr::with_dir('Output', saveWidget(int_map, file="bubblemap_whalesharks.html"))
-
-# Leaflet for predictors
-my.sites <- data.frame(Name=c("Faro, Portugal, NE Atlantic" , "Maspalomas, Spain, NE Atlantic" , "Guadeloupe, France, Caribbean Sea" , "Havana, Cuba, Caribbean Sea") , Lon=c(-7.873,-15.539,-61.208,-82.537) , Lat=c(37.047, 27.794,15.957,23.040 ) )
-my.sites
-
-# Visualise sites of interest in google maps
-m <- leaflet()
-m <- addTiles(m)
-m <- addMarkers(m, lng=my.sites$Lon, lat=my.sites$Lat, popup=my.sites$Name)
-m
-
-# Extract environmental values from layers
-my.sites.environment <- data.frame(Name=my.sites$Name , depth=extract(bathymetry,my.sites[,2:3]) , extract(environment.bottom,my.sites[,2:3]) )
-my.sites.environment
-
-
-# Extract values of the predictors at the locations of the points--- 
-
-# Using extract() for whale shark occurrence points
-extract_pres_ws <- raster::extract(pred_crop, whale_sharks_latlong2)
-
-# Setting random seed to always create the same random set of points
-set.seed(0)
-
-
-# Extract values of the predictors for the 500 random background points 
-backgr <- randomPoints(pred_crop, 500)
-extract_abs_pred <- raster::extract(pred_crop, backgr)
-
-
-# Combining these extracted values into a single dataframe 
-
-pb <- c(rep(1, nrow(extract_pres_ws)), rep(0, nrow(extract_abs_pred)))
-sdmdata <- data.frame(cbind(pb, rbind(extract_pres_ws, extract_abs_pred)))
-
-
-
-
-
-
-
-
-# Inspect available datasets and layers
-library(zoon)
-
-# Filter out terrestrial datasets 
-
-datasets <- list_datasets(terrestrial = FALSE, marine = TRUE)
-layers <- list_layers(datasets) # View layers 
-
-# Loading equal sea surface temperature range and chlorophyll minimum layers 
-
-equal_layers <- load_layers(c("BO_sstrange","BO_chlomin"), equalarea=TRUE)
-
-# Cropping extent to that of Baltic Sea
-                            
-australia <- raster::crop(equal_layers, extent(106e5,154e5, -52e5, -13e5))
-plot(australia)
-
-# Comparing correlations between predictors, globally and for australia 
-
-sst_chl_list <- list(BO_sstrange="Sea Surface Temperature", BO_chlomin="Chlorophyll (min)")
-
-p1 <- plotcorr(layers_correlation(equal_layers), sst_chl_list)
-
-australian_correlations <- pearson_correlation_matrix(australia)
-
-p2 <- plot_correlation(australian_correlations, sst_chl_list)
-
-cowplot::plot_grid(p1, p2, labels=c("A", "B"), ncol = 2, nrow = 1)
-print(correlation_groups(australian_correlations))
-# Fetch occurrences and prepare for ZOON
-occ <- marinespeed::get_occurrences("Dictyota diemensis")
-points <- SpatialPoints(occ[,c("longitude", "latitude")],
-                        lonlatproj)
-points <- spTransform(points, equalareaproj)
-occfile <- tempfile(fileext = ".csv")
-write.csv(cbind(coordinates(points), value=1), occfile)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#bioclim_data <- getData(name="worldclim", 
-                        var= "bio", 
-                        res= 2.5, 
-                        path="Data/")
-
-
-
-
-# Cropping bioclim data to geographic extent of whale sharks 
-
-#bioclim_data <- crop(x=bioclim_data, y= geographic_extent)
-
-#  Reverse order of columns
-#whale_sharks_latlong2 <- whale_sharks_latlong2[, c("longitude", "latitude")]
-
-
-# Building species distribution model 
-
-#bioclim_model <- bioclim(x = bioclim_data, p = whale_sharks_latlong2)
-
-
-# Predict presence from model
-#predict_presence <- dismo::predict(object = bioclim_model, 
-                                   x = bioclim_data, 
-                                   ext = geographic_extent)
-
-
-# map 
-
-# Plotting points on map 
-
-#plot(world_aus, 
-     xlim = c(min.lon, max.lon),
-     ylim = c(min.lat, max.lat),
-     axes = TRUE, 
-     col = "grey95")
-
-# Add model probabilities
-#plot(predict_presence, add = TRUE)
-
-#plot(world_aus, add = TRUE, border = "grey5")
-
-
-#points(whale_sharks_latlong2$longitude, whale_sharks_latlong2$latitude, col = "olivedrab", pch = 20, cex = 0.75)
-box()
-
 
