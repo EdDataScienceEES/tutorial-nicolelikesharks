@@ -1,30 +1,52 @@
-# tutorial-instructions
-## Instructions for Tutorial Assignment
+# Spatial Data and Maps (II) Tutorial 
 
-The key final assignment for the Data Science course is to create your own tutorial. Your tutorial has to communicate a specific quantitative skill - you can choose the level at which you pitch your tutorial and how advanced or introductory it is. You can create "part 2" tutorials where "part 1" is an existing Coding Club tutorial.
+## Here is the [link](https://eddatascienceees.github.io/tutorial-nicolelikesharks/) to the tutorial that will introduce you to species distribution modelling and plotting interactive bubble maps. [This](https://github.com/nicolelikesharks/tutorial_SpatialData2) public repository is where you can access the data needed to complete this tutorial.  Good luck and merry coding! 
+Here's so motivation before we start : ) It's been quite a year, so here's a wholesome comic to hopefully make you smile. 
 
-You are encouraged to add your peers to your tutorial development repositories so that you can exchange feedback - remember that the best way to check if your tutorial makes sense is to have someone that is not you go through it.
+![comic](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/assets/img/wholesome_meme.png)  
+_Yes, yes you do. Source: @wawawiwacomics on Twitter_
 
-__Note that the deadline for this challenge is 12pm on 4th December 2020. Submission is via GitHub like with previous challenges, but you have to also submit a pdf version of your tutorial via Turnitin before 12pm on 4th December 2020. Your submission on GitHub will represent a repository that is also a website (the tutorial on making tutorials below explains how to turn a GitHub repo into a website) and you can just save a pdf of your website using `File/Export as pdf` when you've opened your repository website, you don't need to be separately generating a pdf through code unless you want to.__
+### Description
+This repository contains all the data and resources needed to create the "Spatial Data and Maps (II)" Tutorial as part of the Data Science EES course run by the University of Edinburgh. The [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) can be found in the relevant [folder](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions).  
 
-__Marking criteria:__
 
-•	Topic – A relevant topic and content that is appropriate for a Coding Club tutorial and match the same criteria as for the Data Science challenges and course content (i.e., relevant to the field of data science, appropriate for learners at a particular skill level). - 25%
+### Navigating folders
+assets: This folder contains all the [images](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/assets/img) used for rendering the .md file and the website.   
+Data: This folder contains all the data required can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Data)   
+Instructions: This folder contains the [instructions](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/instructions.md) and [model template](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Instructions/tut_template.md) given for this assignment which can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Instructions)  
+Script: This folder contains the [R script](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/blob/master/Script/sdm_tutorial_nicole.R) and the [.md script]() for the tutorial. They can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Script)    
+Output: All the graphs and outputs can be found [here](https://github.com/EdDataScienceEES/tutorial-nicolelikesharks/tree/master/Output)   
 
-•	Structure – Clear and logical structure to the tutorial that is easy to navigate with clear instructions. Clear, concrete and measurable learning objectives (i.e., people can tell exactly what they are learning and when they have achieved each learning objective). - 25%
 
-•	Reproducibility – Clear and logical structure to the tutorial that is easy to navigate with clear instructions. People can do the tutorial on their own, without assistance and without needing to pay for extra software, the code works and people can easily access any data needed to complete the tutorial. - 25%
+### Etiquette
 
-•	Creativity – A well-illustrated, professionally designed tutorial with appropriate figures and diagrams. A creative and engaging approach to teaching the learning objectives. - 25%
+When giving feedback please adhere to guidelies that can be accessed from https://github.com/EdDataScienceEES/DataScienceHub2020/blob/master/etiquette.md
 
-__Useful links:__
-- https://ourcodingclub.github.io/tutorials/tutorials/ - Coding Club tutorial on how to make tutorials
-- https://ourcodingclub.github.io/tutorials/ - all the other Coding Club tutorials
-- https://github.com/ourcodingclub/ourcodingclub.github.io - the repository behind the Coding Club website - here you can see the Markdown code for how the tutorials were formatted
-- https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf - markdown cheatsheet
+### Sources:  
 
-__Examples of tutorials made by DS students:__
-- https://eddatascienceees.github.io/tutorial-assignment-beverlytan/ - Creating a repository with a clear structure by Beverly Tan
-- https://ourcodingclub.github.io/tutorials/spatial/ - Intro to Spatial Analysis in R by Maude Grenier
+Baez J.C et al., (2019) Accessed: https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5884 on 03/12/2020  
+Bio-ORACLE (2017) Accessed: https://www.bio-oracle.org/downloads-to-email.php and https://www.bio-oracle.org/code.php on 03/12/2020    
+Bosch S (2020) Accessed: https://cran.r-project.org/web/packages/sdmpredictors/vignettes/quickstart.html on 03/12/2020 
+Hijmans R.J  and Elith J (2020) Accessed: https://rspatial.org/raster/sdm/4_sdm_envdata.html on 03/12/2020 
+OBIS (2020) Accessed: https://obis.org/ on 03/12/2020  
+Oliver J (2020) Accessed: https://jcoliver.github.io/learn-r/011-species-distribution-models.html on 03/12/2020
+The R Graph Gallery (2018) Accessed: https://www.r-graph-gallery.com/19-map-leafletr.html on 03/12/2020   
+RStudio (2015) https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf  
+Shi K.J (2017) https://ugoproto.github.io/ugo_r_doc/pdf/leaflet-cheat-sheet.pdf
+Wawawiwacomics (2020) Accessed: https://twitter.com/wawawiwacomics/status/1266321117486211072/photo/1 on 03/12/2020
 
-All the other useful links we have shared with previous challenges and from the course reading - think of the tutorials you have done in the past - what did you like about those tutorials, what didn't work so well and could be improved.
+### Contacts: 
+
+Course organisers:
+Isla Myers-Smith - isla.myers-smith@ed.ac.uk
+
+Tutorial creator:
+Nicole Yap- s1761850@ed.ac.uk
+
+
+## Acknowledgements: 
+
+A sincere thank you to Jiri and Sian for providing feedback throughout the course and for sharing this coding journey with me! We've had lots of laughs and grown so much along the way. 
+I couldn't have asked for a better coding pals. Thank you to the teaching team for delivering this course and for being so patient with us as a cohort, I think we can all say that it's been
+such a really fulfilling experience. Last but not least, thank you to everyone on the course for building such a supportive, safe and fun community that I had the honour to be part of. I
+hope our paths cross again one day (when we all become data scientists?) 
