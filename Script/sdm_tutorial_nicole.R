@@ -53,32 +53,24 @@ min.lon = floor(min(whale_sharks_latlong$longitude))
 geographic_extent <- extent(x = c(min.lon, max.lon, min.lat, max.lat))
 
 
+# Preliminary data visualization---- 
+
 # Obtaining map data 
 
 world <- getMap(resolution = "low")
 world_aus <- world[world@data$ADMIN=='Australia',] # Getting map for Australia
+
 
 # Load simple world map
 
 data(wrld_simpl)
 plot(wrld_simpl, xlim = c(98, 154), ylim = c(-44, -6), axes=TRUE, col="light yellow") # Zooming into region of interest
 
-
-#Add chlorophyll and SST data from rasters to our datapoints
-whale_sharks_latlong3 <- whale_sharks_latlong2  # create copy of dataframe coordinates to be converted to SpatialPoints
-coordinates(whale_sharks_latlong3) <- ~longitude+latitude # 
-whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) # add chl data from raster to new column
-whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # # add SST data from raster to new column
-
-
-# Preliminary data visualization---- 
-
 # Plot basic whale shark occurence points 
 
 (prelim_plot <- ggplot(whale_sharks_latlong, aes(x = longitude, y = latitude, 
                                                  colour = num_animals)) +
         geom_point())
-
 
 
 # Plotting points on australia map
@@ -106,6 +98,21 @@ whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) # # add
 ggsave("Output/raw_whalesharks_map.pdf",raw_whale_sharks_map)
 ggsave("Output/raw_whalesharks_map.png",raw_whale_sharks_map)
 
+
+# Add chlorophyll and SST data from rasters to our datapoints
+
+# Create copy of dataframe coordinates to be converted to SpatialPoints
+
+whale_sharks_latlong3 <- whale_sharks_latlong2  
+coordinates(whale_sharks_latlong3) <- ~longitude+latitude 
+
+# Add chl data from raster to new column
+
+whale_sharks_latlong$chl <- extract(chl_raster, whale_sharks_latlong3) 
+
+# Add SST data from raster to new column
+
+whale_sharks_latlong$temp <- extract(temp_raster, whale_sharks_latlong3) 
 
 # Eliminate false records that fall on land
 
@@ -161,17 +168,15 @@ whale_sharks_latlong <- subset(whale_sharks_latlong, is.na(whale_sharks_latlong$
 ggsave("Output/prelim_whalesharks_map.pdf",whale_sharks_map)
 ggsave("Output/prelim_whalesharks_map.png",whale_sharks_map)
 
-# Rebuild temperature layer to match chlorophyll layer
+# Rebuild chlorophyll layer to match temperature layer
 
 new_chl <- raster(vals=values(chl_raster),ext=extent(temp_raster), nrows=dim(temp_raster)[1],ncols=dim(temp_raster)[2])
 
 
-# Creating new raster predictor stack---- 
-
-# Plot occurence points on chlorophyll layer 
+# Creating new raster predictor stack
 
 predictors <- stack(temp_raster, new_chl)
-pred_crop <- crop(predictors, geographic_extent) # Cropping predictor stack using geographic extend of data
+pred_crop <- crop(predictors, geographic_extent) # Cropping predictor stack using geographic extent of data
 
 # Saving outputs 
 
@@ -196,16 +201,20 @@ dev.off()
 dev.off()
 
 
-#Creating interactive bubble map----
+# Creating interactive bubble map----
 
 # Create a color palette with customizable bins
 
 mybins <- seq(1, 22, by=2)
-mypalette <- colorBin( palette='PuRd', whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)# Prepare the text for the tooltip
+mypalette <- colorBin( palette='PuRd', whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+
 
 mypalette <-colorNumeric(
     palette = "PuRd",
     domain = whale_sharks_latlong$num_animals)
+
+
+# Prepare the text for the tooltip
 
 mytext <- paste(
     "Longitude: ", whale_sharks_latlong$longitude, "<br/>", 
