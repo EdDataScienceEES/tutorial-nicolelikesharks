@@ -15,7 +15,7 @@ If you want to make text bold, you can surround it with `__text__`, which create
 ## Whale-come to Spatial Data and Maps part II!
 <img align="center" width="687" height="384" src="./Images/whaleshark_swim.png">  
   
-_Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)_
+*Whale Sharks are the Gentle Giants of the Sea. Source: [Barathieu, 2020](https://www.underwater-landscape.com/en/-/galeries/best-of/-/medias/9691375e-c115-44c0-a988-5028234eddac-whale-shark-in-split-level)*
 
 ### What is Species Distribution Modelling?
 
