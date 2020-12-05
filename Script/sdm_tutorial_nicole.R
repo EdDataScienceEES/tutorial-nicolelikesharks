@@ -170,7 +170,10 @@ ggsave("Output/prelim_whalesharks_map.png",whale_sharks_map)
 
 # Rebuild chlorophyll layer to match temperature layer
 
-new_chl <- raster(vals=values(chl_raster),ext=extent(temp_raster), nrows=dim(temp_raster)[1],ncols=dim(temp_raster)[2])
+new_chl <- raster(vals=values(chl_raster),
+                  ext=extent(temp_raster), 
+                  nrows=dim(temp_raster)[1],
+                  ncols=dim(temp_raster)[2])
 
 
 # Creating new raster predictor stack
@@ -206,12 +209,17 @@ dev.off()
 # Create a color palette with customizable bins
 
 mybins <- seq(1, 22, by=2)
-mypalette <- colorBin( palette='PuRd', whale_sharks_latlong$num_animals, na.color="transparent", bins=mybins)
+
+mypalette <- colorBin( palette='PuRd',
+                       whale_sharks_latlong$num_animals, 
+                       na.color="transparent", 
+                       bins=mybins)
 
 
 mypalette <-colorNumeric(
     palette = "PuRd",
     domain = whale_sharks_latlong$num_animals)
+
 
 
 # Prepare the text for the tooltip
@@ -233,9 +241,15 @@ mytext <- paste(
     addCircleMarkers(~longitude, ~latitude, 
                      fillColor = ~mypalette(num_animals), fillOpacity = 0.8, color="white", radius=8, stroke=FALSE,
                      label = mytext,
-                     labelOptions = labelOptions( style = list("font-weight" = "normal", padding = "3px 8px"), textsize = "13px", direction = "auto")
+                     labelOptions = labelOptions( style = list("font-weight" = "normal", 
+                                                               padding = "3px 8px"), 
+                                                  textsize = "13px", 
+                                                  direction = "auto")
     ) %>%
-    addLegend( pal=mypalette, values=~num_animals, opacity=0.9, title = "Number of animals", position = "bottomright" ))
+    addLegend( pal=mypalette, values=~num_animals, 
+               opacity=0.9,
+               title = "Number of animals", 
+               position = "bottomright" ))
 
 
 
