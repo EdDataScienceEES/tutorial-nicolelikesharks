@@ -1,4 +1,4 @@
-# Spatial Data and Maps (II) Tutorial 
+# Coding Club Spatial Data and Maps (II) Tutorial 
 
 ## Here is the [link](https://eddatascienceees.github.io/tutorial-nicolelikesharks/) to the tutorial that will introduce you to species distribution modelling and plotting interactive bubble maps. [This](https://github.com/nicolelikesharks/tutorial_SpatialData2) public repository is where you can access the data needed to complete this tutorial.  Good luck and merry coding! 
 Here's so motivation before we start : ) It's been quite a year, so here's a wholesome comic to hopefully make you smile. 
